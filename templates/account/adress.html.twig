@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresses-Sitraka Boutique 
+{% endblock %}
+
+{% block content %}
+	<div data-aos="fade-down">
+        <a href="{{path('account_adress_add')}}" class="btn btn-info btn-sm float-right">
+            <i class="fas fa-add"></i>
+            Ajouter une adresse
+        </a>
+        <h1>Mes adresses</h1>
+        C'est dans cette éspace  que vous allez pouvoir gerer vos adresses
+        <br>
+        <a href="{{path('account')}}">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            Retour
+        </a>
+        <hr>
+        {% if app.user.adresses|length ==0 %}
+            <p class="text-center">
+                Vous n'avez pas encore ajouté  d'adresse dans votre compte client. Pour en ajouter une veillez
+                <a href="{{path('account_adress_add')}}">cliquer ici</a>.
+            </p>
+        {% else %}
+            <div class="row">
+                {% for adresse in app.user.adresses %}
+                    <div class="col-md-4">
+                        <div class="card mt-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ adresse.name }}</h5>
+                                <p class="card-text">
+                                    {{adresse.adress}},<br>
+                                    {{adresse.postal}}
+                                    {{adresse.city}}
+                                    {{adresse.country}}
+                                    {{adresse.phone}}
+                                </p>
+                                <a href="{{ path('account_adress_edit',{'id': adresse.id }) }}" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>Modifier
+                                </a>
+                                <a href="{{ path('account_adress_delete',{'id': adresse.id }) }}" class=" btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                    Supprimer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <hr>
+        {% endif %}
+    </div>
+{% endblock %}

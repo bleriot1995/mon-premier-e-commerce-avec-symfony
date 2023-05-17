@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte - Sitraka Boutique{% endblock %}
+
+{% block content %}
+<h1 data-aos="fade-down">Mon compte</h1>
+<hr data-aos="fade-down">
+<p data-aos="fade-down"> Bienvenue <strong>{{app.user.firstName}}</strong> dans votre compte. <br>
+C'est ici que vous allez pouvoir gerer vos informations personnel</p>
+<hr data-aos="fade-down">
+<p data-aos="fade-down">
+    -<a href="{{path('account_password')}}" data-aos="fade-down">Modifier mon mots de passe</a><br>
+    -<a href="{{ path('account_adress') }}" data-aos="fade-down">Gerer mes adresses</a><br>
+    -<a href="" data-aos="fade-down">Mes commande</a>
+</p>
+<hr data-aos="fade-down">
+{% endblock %}
+

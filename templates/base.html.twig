@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+		<meta name="generator" content="Hugo 0.104.2">
+		<title>
+			{% block title %}Sitraka Boutique - 100% made in France
+			{% endblock %}
+		</title>
+		<link rel="icon" type="image/x-icon" href="/uploads/images2.ico">
+		<link rel="stylesheet" href="/css/boutiquefrancaise.css">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/aos.css" rel="stylesheet">
+		<link
+		href="/css/all.min.css" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="/css/carousel.css" rel="stylesheet">
+		{% block javascript %}
+		<script src="https://js.stripe.com/v3/"></script>
+        {% endblock %}
+	</head>
+	<body>
+
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="{{ path('home') }}">Sitraka Boutique</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="{{path('products')}}">Produits</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="#">Qui sommes-nous?</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="#">Contact</a>
+							</li>
+						</ul>
+						<ul class="navbar-nav ml-auto text-white">
+							{% if app.user %}
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										<i class="fas fa-user"></i>
+										{{app.user.lastName}}
+										{{app.user.firstName}}
+									</a>
+
+									<div class="dropdown-menu dropdown-menu-right" area-labeledby="dropdown">
+
+										<a class="dropdown-item" href="{{path('account')}}">
+											<i class="fas-sharp fa-solid fa-circle-user"></i>
+											<small>Mon profil</small>
+										</a>
+										<div class="dropdown-divider"></div>
+
+										<a href="{{path('app_logout')}}" class="dropdown-item">
+											<small>
+												<i class="fas fa-sign-out" aria-hidden="true"></i>Deconnexion
+											</small>
+										</a>
+									</div>
+								</li>
+							</div>
+							{% else %}
+							<a class="nav-item btn btn-primary" href="{{path('app_login')}}">
+								<i class="fas fa-sign-in" aria-hidden="true"></i>&nbsp;Connexion
+							</a>
+							&nbsp;
+							<a class="nav-item btn btn-secondary" href="{{path('register')}}">
+								<i class="fa-solid fa-user-plus"></i>&nbsp;Inscription
+							</a>
+						{% endif %}
+					</ul>
+					</div>
+					<a href="{{ path('cart') }}">
+						<img src="{{ asset('/img/shopping-cart.png') }}" class="cart-icon" alt="Mon panier">
+					</a>
+				</div>
+			</nav>
+		</header>
+
+		<main>
+       {% if block('carousel') is defined %}
+			<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				</div>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+						<div class="container">
+							<div class="carousel-caption text-start">
+								<h1>Example headline.</h1>
+								<p>Some representative placeholder content for the first slide of the carousel.</p>
+								<p>
+									<a class="btn btn-lg btn-primary" href="#">Sign up today</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+						<div class="container">
+							<div class="carousel-caption">
+								<h1>Another example headline.</h1>
+								<p>Some representative placeholder content for the second slide of the carousel.</p>
+								<p>
+									<a class="btn btn-lg btn-primary" href="#">Learn more</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+						<div class="container">
+							<div class="carousel-caption text-end">
+								<h1>One more for good measure.</h1>
+								<p>Some representative placeholder content for the third slide of this carousel.</p>
+								<p>
+									<a class="btn btn-lg btn-primary" href="#">Browse gallery</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+       {% endif %}
+
+			<!-- Marketing messaging and featurettes
+																															  ================================================== -->
+			<!-- Wrap the rest of the page in another container to center all the content. -->
+
+			<div class="container marketing  {% if block('carousel') is not defined %}mt-5{% endif %}">
+
+				{% block content %} {% endblock  %}
+
+			<!-- /END THE FEATURETTES -->
+
+			</div>
+			<!-- /.container -->
+
+
+			<!-- FOOTER -->
+			<footer class="bg-dark text-white pt-5 pb-4">
+				<div class="container text-center text-md-left">
+					<div class="row text-center text-md-left">
+						<div class="col-md-3 clo-lg-3 col-xl-3 mx-autp mt-3">
+							<h5 class="text-uppercase mb-4 font-weight-bold text-warning">Sitraka boutique</h5>
+							<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut ea odit maxime fugiat in eum sapiente unde nulla est corporis sit, quasi cupiditate nam aliquam ducimus vel ipsum facere tempore?</p>
+						</div>
+						<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+							<h5 class="text-upercase mb-4 font-weight-bold text-warning">Produits</h5>
+							<p>
+								<a href="" class="text-white" style="text-decoration: none;">
+									<i class="fa-solid fa-star"></i>Nos meilleur ventes
+								</a>
+							</p>
+							<p>
+								<a href="" class="text-white" style="text-decoration: none;">
+									<i class="fa-solid fa-tag"></i>Nos produits</a>
+							</p>
+							<p>
+								<a href="" class="text-white" style="text-decoration: none;">SourcesFiles</a>
+							</p>
+							<p>
+								<a href="" class="text-white" style="text-decoration: none;">Bootstrap 5 alpha</a>
+							</p>
+						</div>
+						<div class="md-4 col-lg-2 col-xl-2 mx-auto mt-3">
+							<h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contacter nous</h5>
+							<p>
+								<i class="fas-sharp fa-solid fa-house"></i>Imandry 129IE/3706 Fianarantsoa
+							</p>
+							<p>
+								<i class="fas fa-envelope mr-3"></i>bleriottiana1995@gmail.com
+							</p>
+							<p>
+								<i class="fas fa-phone"></i>+261344511416
+							</p>
+						</div>
+						<hr class=" mb-4">
+						<div class="row align-items-center">
+							<div class="md-7 col-lg-8">
+								<p>&copy;
+									<a href="">
+										<small>
+											2022 La Boutique Francaise
+											<br>
+											La Boutique 100% made in France
+										</small>
+									</a>
+								</p>
+							</div>
+							<div class="col-md-5 col-lg-4">
+								<div class="row">
+									
+								</div>
+								<div class="text-center text-md-right">
+									<ul class="list-unstyled list-inline bg-color:white;">
+										<li class="list-inlene-item">
+											<a href="" class="btn-floating btn-sm text-white" style="font-size: 23px;">
+												<i class="fa-brands fa-instagram"></i>
+											</a>
+										</li>
+										<li class="list-inlene-item">
+											<a href="" class="btn-floating btn-sm text-white" style="font-size: 23px;">
+												<i class="fa-brands fa-twitter"></i>
+											</a>
+										</li>
+										<li class="list-inlene-item">
+											<a href="" class="btn-floating btn-sm text-white" style="font-size: 23px;">
+												<i class="fa-brands fa-google"></i>
+											</a>
+										</li>
+										<li class="list-inlene-item">
+											<a href="" class="btn-floating btn-sm text-whie" style="font-size: 23px;">
+												<i class="fa-brands fa-facebook"></i>
+											</a>
+										</li>
+										<li class="list-inlen-item">
+											<a href="" class="btn-floating btn-sm text-whie" style="font-size: 23px;">
+												<i class="fa-brands fa-youtube"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</main>
+
+		<script src="/js/bootstrap.min.js">
+		</script><script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/bootstrap-dropdown.js"></script>
+		<script src="/js/all.min.js"></script>
+		<script src="/js/aos.js"></script>
+		<script src="https://js.stripe.com/v3/"></script>s
+		<script>
+
+			AOS.init({
+				delay: 400,
+				duration: 1000
+			})
+		
+		</script>
+	</body>
+	{% block script %}
+    {% endblock %}
+</html>
