@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Stripe\Stripe;
 
 class OrderSuccessController extends AbstractController
 {
@@ -24,19 +25,18 @@ class OrderSuccessController extends AbstractController
     {
         $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
         $this->entityManager->flush();
-        // if (!$order || $order->getUser() != $this->getUser()) {
-        //     return $this->redirectToRoute('home');
-        // }
+         if (!$order || $order->getUser() != $this->getUser()) {
+             return $this->redirectToRoute('home');
+         }
 
-        // if (!$order->getIsPaid()) {
-        //     // Modifier le statut isPaid de notre commande en mettant 1
-        //     $order->setIsPaid(1);
-        //     $this->entityManager->persist($order);
-        //     $this->entityManager->flush();
-        //     // Envoyer un email à notre client pour lui confirmer sa commande
-        // }
+         if (!$order->isIsPaid()) {
+             // Modifier le statut isPaid de notre commande en mettant 1
+             $order->setIsPaid(1);
+             $this->entityManager->persist($order);
+             $this->entityManager->flush();
+             // Envoyer un email à notre client pour lui confirmer sa commande
+         }
 
-        dd($order);
         return $this->render('order_validate/index.html.twig', [
             'order' => $order
         ]);

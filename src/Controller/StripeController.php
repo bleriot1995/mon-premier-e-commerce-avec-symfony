@@ -55,9 +55,7 @@ class StripeController extends AbstractController
                 'quantity' => 1,
             ];
         }
-
         Stripe::setApiKey('sk_test_51MMUZFBIHwzZq0AEx5XS2iunsu4mlIpiVDoa156lfFbURGNxHnRqh9GIyPa6nkklQY14RldaHlGLNTILfNpXapSp001ezyJZf3');
-
         $checkout_session = Session::create([
             'customer_email' => $this->getUser()->getEmail(),
             'payment_method_types' => ['card'],
@@ -70,9 +68,10 @@ class StripeController extends AbstractController
         ]);
 
         $order->setStripeSessionId($checkout_session->id);
+        $entityManager->persist($order);
         $entityManager->flush();
-
-        $response = new JsonResponse(['id' => $checkout_session->id]);
-        return $response;
+//        $response = new JsonResponse(['id' => $checkout_session->id]);
+//        return $response;
+        return $this->redirect($checkout_session->url, 303);
     }
 }
